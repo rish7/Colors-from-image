@@ -1,7 +1,7 @@
 This library [Demo](https://rish7.github.io/Colors-from-image/index.html).
 # Colors from image
 This library helps to get colors from image. We can get high presence, low presence, Font color based on give color and also invert Color.
-![alt tag](https://rish7.github.io/Colors-from-image/preview.png | width=400)
+![preview image](https://rish7.github.io/Colors-from-image/preview.png)
 ### Getting started
 
 var cfi = new ColorsfromImage({});
