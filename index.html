@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Colors from Image</title>
+  <style>
+    div.palette {
+      width: 250px;
+      height: 55px;
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 10px 10px 5px #888888;
+    }
+    
+    div span {
+      font-weight: bold;
+      width: 100%;
+      text-align: center;
+      display: block;
+    }
+    
+    #imagesDiv, #resultDiv {
+      display: block;
+      width: 100%;
+      height: auto;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    #imagesDiv img {
+      cursor: pointer;
+      width:150px;
+      margin: 0px 30px;
+      border:2px solid #fff;
+    }
+
+    #imagesDiv img:hover{
+      border-color:rgba(4,163,237,1);
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Colors from Image</h2>
+ <div id="imagesDiv">
+   <p>Please select image to get colors</p>
+   <img src="Share-Our-Ideas-Logo.png" alt="Share Our Ideas" onclick="imageSelected(this.src)"/>
+   <img src="rose.png" alt="Keyboard and Red Rose" onclick="imageSelected(this.src)"/>
+   <img src="soi-red.png" alt="Me" onclick="imageSelected(this.src)"/>
+
+   <br/> <strong>* Hide functionality are invert color, find matching fore color for Bg color and rgb color to hex color code.</strong>
+</div>
+
+  <div id="resultDiv">
+  </div>
+  <script type="text/javascript" src="colors-from-image.js"></script>
+  <script>
+    var cfi = new ColorsfromImage({});
+
+    function imageSelected(src) {
+      cfi.getColors(src, function (data) {
+        showResult(data);
+      }, function (msg) {
+        alert(msg);
+        showResult();
+      });
+    }
+
+
+    function showResult(data) {
+      var resultDiv = document.getElementById("resultDiv");
+      if (!data) {
+        resultDiv.innerHTML = "<h3>Sorry unable to get colors from image";
+        return;
+      }
+      var resultHTML = "";
+
+      resultHTML = getColorPalette(data.highPresenceColor, data.highPresenceForeColor, "High Presence Color");
+      resultHTML += getColorPalette(data.lessPresenceColor, data.lessPresenceForeColor, "Less Presence Color");
+      resultHTML += getColorPalette( cfi.toHexString(cfi.getInvertColor(data.highPresenceColor)), cfi.toHexString(cfi.getInvertColor(data.highPresenceForeColor)), "High Presence Color Invert");
+
+      resultHTML += "<h3>Other Colors</h3>"
+      for (var i = 1, length = data.palettes.length; i < length - 1; i++) {
+        resultHTML += getColorPalette(data.palettes[i], cfi.getForeColor(data.palettes[i]), "&nbsp;");
+      }
+
+
+
+      resultDiv.innerHTML = resultHTML;
+
+    }
+
+    function getColorPalette(color, foreColor, title) {
+      var divEle = '<div class="palette" style="background-color:' + color + ';color:' + foreColor + '">';
+      if (title) {
+        divEle += '<span>' + title + '</span>';
+      }
+      divEle += 'Bg color: ' + color;
+      divEle += '<br/>Font color: ' + foreColor;
+      divEle += '</div>';
+      return divEle
+    }
+  </script>
+</body>
+
+</html>
