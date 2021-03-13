@@ -49,7 +49,7 @@ function ColorsfromImage(args) {
 
             var highPresenceColor = getHighPresenceColor(colors);
             var lessPresenceColor = (colors && colors.length > 0 ? colors[colors.length - 1] : "rgba(255,255,255,0)");
-            var data = {
+            var callbackData = {
                 "palettes": colors,
                 "highPresenceColor": highPresenceColor, //ignores white and black colors
                 "lessPresenceColor": lessPresenceColor,
@@ -58,7 +58,7 @@ function ColorsfromImage(args) {
             }
 
             if (callback) {
-                callback(data);
+                callback(callbackData);
             }
         }
         base_image.onerror = loadingError;
@@ -91,9 +91,10 @@ function ColorsfromImage(args) {
         // Counting the perceptive luminance - human eye favors green color... 
         var a = 1 - (0.299 * rgbs[0] + 0.587 * rgbs[1] + 0.114 * rgbs[2]) / 255;
         var d = 0;
-        if (a < 0.5) {
-            d = 0; // bright colors - black font
-        } else {
+        // if (a < 0.5) {
+        //    d = 0; // bright colors - black font
+        // }  
+        if (a >= 0.5){
             d = 255; // dark colors - white font
         }
 
