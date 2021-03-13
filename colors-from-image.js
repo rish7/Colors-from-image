@@ -91,9 +91,12 @@ function ColorsfromImage(args) {
         // Counting the perceptive luminance - human eye favors green color... 
         var a = 1 - (0.299 * rgbs[0] + 0.587 * rgbs[1] + 0.114 * rgbs[2]) / 255;
         var d = 0;
+        /**
+        * in case we need force bright color
         // if (a < 0.5) {
         //    d = 0; // bright colors - black font
-        // }  
+        // }
+        */
         if (a >= 0.5){
             d = 255; // dark colors - white font
         }
