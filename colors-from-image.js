@@ -3,7 +3,6 @@
  * @param {object} args  e.g. data {height: 10, width: 10, isAllowCrossOrigin: false }
  */
 
-
 function ColorsfromImage(args) {
     var canvas, context;
     canvas = document.createElement('canvas');
